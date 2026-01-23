@@ -1,32 +1,41 @@
 #include <iostream>
 #include <cmath>
 using namespace std;
-double findBinomial(int N, int R)
+
+double findBinomial(int N, int R, double P)
 {
-    int n = 1, r = 1, x = 1;
+    int factN = 1, factR = 1, factNR = 1;
+
     for (int i = 1; i <= N; i++)
-    {
-        n = n * i;
-    }
+        factN *= i;
+
     for (int j = 1; j <= R; j++)
-    {
-        r = r * j;
-    }
+        factR *= j;
+
     for (int k = 1; k <= (N - R); k++)
-    {
-        x = x * k;
-    }
-    double result = (n / (r * x)) * (pow(0.5, R)) * (pow(0.5, N - R));
+        factNR *= k;
+
+    double nCr = (double)factN / (factR * factNR);
+
+    double result = nCr * pow(P, R) * pow((1 - P), N - R);
     return result;
 }
+
 int main()
 {
     int N, R;
-    cout << "enter the value of N: ";
+    double P;
+
+    cout << "Enter the value of N: ";
     cin >> N;
-    cout << "enter the value of R: ";
+
+    cout << "Enter the value of R: ";
     cin >> R;
-    cout << "the value of nCr:" << findBinomial(N, R);
+
+    cout << "Enter probability of success (P): ";
+    cin >> P;
+
+    cout << "Binomial Probability = " << findBinomial(N, R, P);
 
     return 0;
 }
