@@ -1,3 +1,2 @@
-# DSA
-hello!!
-my name is Ashad Ali 1111111
+DSA in C++.
+
