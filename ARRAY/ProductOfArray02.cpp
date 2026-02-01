@@ -20,7 +20,8 @@ int main()
     {
         ans[i] = prefix[i] * suffix[i];
     }
-    for(int val : ans){
-        cout<<val<<" ";
+    for (int val : ans)
+    {
+        cout << val << " ";
     }
 }
