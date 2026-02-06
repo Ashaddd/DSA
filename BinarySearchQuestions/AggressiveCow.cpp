@@ -1,22 +1,52 @@
 #include<iostream>
 #include<vector>
+#include<algorithm>
 using namespace std;
-int FindMinDistance(vector<int>&Arr, int n,int m){
-    int Min = INT_MAX;
-    int Max = INT_MIN;
-    for (int i = 0; i < n; i++)
+
+bool isPossible(vector<int> &Arr, int N, int C, int minAllowedDist){
+    int cows =1, lastStallPos = Arr[0];
+
+    for ( int i = 0; i < N; i++)
     {
-        Min = min(Min,Arr[i]);
-        Max= max(Max,Arr[i]);
+        if (Arr[i]-lastStallPos >= minAllowedDist )
+        {
+            cows++;
+            lastStallPos = Arr[i];
+        }
+        if (cows==C)
+        {
+            return true;
+        }
+        
+        
     }
-    int lowest =1;
-    int highest = Max-Min;
-    
+    return false;
     
 }
+
+int getDistance(vector<int> &Arr, int  N, int C){
+    sort(Arr.begin(), Arr.end());
+    int st =1, end = Arr[N-1]-Arr[0], ans=-1;
+    while(st<=end){
+        int mid = st + (end - st)/2;
+
+        if (isPossible(Arr, N, C, mid))
+        {
+            ans = mid;
+            st =mid +1;
+
+        }else{
+            end = mid - 1;
+        }
+        
+    }
+    return ans;
+}
+
 int main(){
     vector<int>Arr={1,2,8,4,9};
-    int n = Arr.size();
-    int m=3;
-    cout<<FindMinDistance(Arr,n, m);
+    int N = Arr.size(),C=3;
+    cout<<getDistance(Arr,N,C);
+    return 0;
+    
 }
