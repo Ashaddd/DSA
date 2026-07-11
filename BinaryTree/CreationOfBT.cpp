@@ -1,0 +1,106 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+class Node
+{
+public:
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int val)
+    {
+        data = val;
+        left = right = NULL;
+    }
+};
+
+static int idx = -1;
+Node *buildTree(vector<int> preorder)
+{
+    idx++;
+
+    if (preorder[idx] == -1)
+    {
+        return NULL;
+    }
+    Node *root = new Node(preorder[idx]);
+    root->left = buildTree(preorder);
+    root->right = buildTree(preorder);
+
+    return root;
+};
+
+void PreOrder(Node *root)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    cout << root->data << " ";
+    PreOrder(root->left);
+    PreOrder(root->right);
+};
+
+
+void PostOrder(Node* root){
+    if (root==NULL)
+    {
+        return;
+    }
+    PostOrder(root->left);
+    PostOrder(root->right);
+    cout<<root->data<<" ";
+};
+
+void InOrder(Node* root){
+    if (root==NULL)
+    {
+        return;
+    }
+    InOrder(root->left);
+    cout<<root->data<<" ";
+    InOrder(root->right);
+
+};
+
+void levelOrder(Node* root){
+    queue<Node*> q;
+
+    q.push(root);
+
+    while(q.size() > 0){
+        Node* curr = q.front();
+        q.pop();
+
+        cout<<curr->data<<" ";
+        if (curr->left != NULL){
+            q.push(curr->left);
+        }
+        if (curr->right != NULL){
+            q.push(curr->right);
+        }
+         
+    }
+}
+
+int main()
+{
+    vector<int> preorder = {1, 2, -1, -1, 3, 4, -1, -1, 5, -1, -1};
+
+    Node *root = buildTree(preorder);
+    cout<<"PreOrder: ";
+    PreOrder(root);
+    cout << endl;
+    cout<<"PostOrder: ";
+    PostOrder(root);
+    cout<<endl;
+    cout<<"InOrder: ";
+    InOrder(root);
+    cout<<endl;
+    cout<<"level-order: ";
+    levelOrder(root);
+
+    return 0;
+}
